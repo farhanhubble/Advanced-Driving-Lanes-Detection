@@ -123,8 +123,7 @@ The code inside **draw_lanes()** runs all the steps described above. It also che
 ## Results
 The pipeline was applied to the [project_video.mp4](https://github.com/farhanhubble/CarND-Advanced-Lane-Lines/blob/master/project_video.mp4) and the resulting video saved as [processed-project_video.mp4](https://github.com/farhanhubble/CarND-Advanced-Lane-Lines/blob/master/processed-project_video.mp4). The output video shows smooth lane detection and sensible values of radius and displacemnent. The output video can also be viewed on [YouTube](https://www.youtube.com/watch?v=3TUH5pvMmcI).
 
+## Discussions
+The threshold parameters and masks chosen worked wonderfully for the project video but did not generalize well to the  challenge video. The reason was very low saturaton in the second video. While another set of parmeters could be chosen that worked for the second video, manually selecting the parameters everytime in this way did not make sense. 
 
-
-
-
-
+Mask and parameter selection is very similar to building a decision tree and it might be automated given enough images with annotated lane positions. An alternative would be to let a deep network learn the correct transforms but that again requires a lot of training data.
