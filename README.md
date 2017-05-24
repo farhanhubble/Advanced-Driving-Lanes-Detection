@@ -50,7 +50,16 @@ Final value of the thresholds and the right combination masks were decided based
 3. S channel highlights the lane markings clearly if images have good saturation.
 4. L channel can be combined with S channel to exclude edges from low-lit areas.
 
-Final thresholds are avilable throughout the notebook by calling **get_thresholds()** and the combined mask used on all video frames is obtained by calling **get_lane_mask()**.  
+Final thresholds are avilable throughout the notebook by calling **get_thresholds()** and the combined mask used on all video frames is obtained by calling **get_lane_mask()**. Here is  summary of the mask names and corresponding thresholds:
+
+| Mask Name | Thresholds | Description                                                 |
+|-----------|------------|-------------------------------------------------------------|
+| s_mask    | (170,255)  | S channel mask in the HSV colorspace.                       |
+| l_mask    | (50,250)   | L channel mask in the HSV colorspace.                       |
+| mag_mask  | (80,150)   | Absolute magnitude of Sobel operator in x and y directions. |
+| ang_mask  | (0.85,1.0) | Angle mask dereived as the inverse tan of Sobel y and x     |
+
+The final mask derived was: **mag_s_mask = (mag_mask | s_mask) | (ang_mask & s_mask) & l_mask**.
 
 
 
