@@ -118,7 +118,9 @@ Once the polynomials are displayed on top of the warped binary mask, the mask is
 To make lane plotting and other calculations smooth the previous 5 polynomials were cached using the **LaneHist** class. The caching was not done for outlier frames.
 
 ## The Pipeline
-The code inside **draw_lanes()** runs all the steps described above. It also checks for outiers frames and caches lane information. This function was called for every frame in the video.
+The code inside **draw_lanes()** runs all the steps described above. It also checks for outiers frames and caches lane information. This function was called for every frame in the video. A output generated for a typica frame looked like this:
+
+![mask image 1](readme-resources/frame-grab.png)
 
 ## Results
 The pipeline was applied to the [project_video.mp4](https://github.com/farhanhubble/CarND-Advanced-Lane-Lines/blob/master/project_video.mp4) and the resulting video saved as [processed-project_video.mp4](https://github.com/farhanhubble/CarND-Advanced-Lane-Lines/blob/master/processed-project_video.mp4). The output video shows smooth lane detection and sensible values of radius and displacemnent. The output video can also be viewed on [YouTube](https://www.youtube.com/watch?v=3TUH5pvMmcI).
