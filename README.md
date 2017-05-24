@@ -26,5 +26,16 @@ The object points, image points were then passed to **cv2.calibrateCamera()**, w
 
 ![chess with corner markers](readme-resources/corners.png)
 
+Once the calibration was done, the following steps were executed for every video frame.
+
+## Undistortion
+Every video frame was undistorted using the parameters obtained in the calibration step. **OpenCV** API **cv2.undistort()** was used for this purpose. The section named **Testing Undistortion** has some test code for monitoring the effect of undistortion. Undistortion was first tested on the calibration images themselves. Here is one such image and its undistorted version compared side by side.
+![Distorted image, undistorted image](readme-resources/undistort.png)
+![Distorted image, undistorted image](readme-resources/undistorted2.png)
+
+Effects of undistortion are most noticeable near the edges of the images. In the image of the road, the car's hood, visible at the bottom has shrunk substantially.
+
+
+
 
 
