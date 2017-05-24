@@ -50,6 +50,8 @@ Final value of the thresholds and the right combination masks were decided based
 3. S channel highlights the lane markings clearly if images have good saturation.
 4. L channel can be combined with S channel to exclude edges from low-lit areas.
 
+The parameters in the evaluation phase were tuned to detect the lane lines in nearly all frames of the project video. 
+
 Final thresholds are avilable throughout the notebook by calling **get_thresholds()** and the combined mask used on all video frames is obtained by calling **get_lane_mask()**. Here is  summary of the mask names and corresponding thresholds:
 
 | Mask Name | Thresholds | Description                                                 |
@@ -59,7 +61,19 @@ Final thresholds are avilable throughout the notebook by calling **get_threshold
 | mag_mask  | (80,150)   | Absolute magnitude of Sobel operator in x and y directions. |
 | ang_mask  | (0.85,1.0) | Angle mask dereived as the inverse tan of Sobel y and x     |
 
-The final mask derived was: **mag_s_mask = (mag_mask | s_mask) | (ang_mask & s_mask) & l_mask**.
+
+## Binary Mask Application
+The final mask  **mag_s_mask = (mag_mask | s_mask) | (ang_mask & s_mask) & l_mask** was applied to every video frame.
+
+As can be seen in the images below the mask performs very well under different conditions.
+
+![mask image 1](readme-resources/final-mask1.png)
+
+![mask image 2](readme-resources/final-mask2.png)
+
+![mask image 3](readme-resources/final-mask3.png)
+
+![mask image 4](readme-resources/final-mask4.png)
 
 
 
