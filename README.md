@@ -26,5 +26,43 @@ The object points, image points were then passed to **cv2.calibrateCamera()**, w
 
 ![chess with corner markers](readme-resources/corners.png)
 
+Once the calibration was done, the following steps were executed for every video frame.
+
+## Undistortion
+Every video frame was undistorted using the parameters obtained in the calibration step. **OpenCV** API **cv2.undistort()** was used for this purpose. The section named **Testing Undistortion** has some test code for monitoring the effect of undistortion. Undistortion was first tested on the calibration images themselves. Here is one such image and its undistorted version compared side by side.
+![Distorted image, undistorted image](readme-resources/undistort.png)
+
+Here is how an image taken from the car's camera looks like before and after undistortion.
+![Distorted image, undistorted image](readme-resources/undistorted2.png)
+
+Effects of undistortion are most noticeable near the edges of the images. In the image of the road, the car's hood, visible at the bottom has shrunk substantially.
+
+## Binary Mask Evaluation
+To find edges in the frame image a set of Sobel transfroms were combined with thresholding in the HLS colorspace. The thresholds for both Sobel transforms as well as color threshoding were computed manually by trial and error. This was done only once and not performed for every frame. 
+
+Some of the masks that were tested can be visualized by enabling the **__DEBUG__** flag in the topmost cell and executing the function **visualize_candidate_masks()**. Here's a sample image from the experimentation phase.
+
+![Visualizing edge masks](readme-resources/visualize-all.png)
+
+Final value of the thresholds and the right combination masks were decided based on the following observations:
+1. X and Y Sobel masks alway identify edges belonging to lane markings but also include other edges.
+2. A Sobel angle mask will have dense regions where yellow markings are present but has uniform noise.
+3. S channel highlights the lane markings clearly if images have good saturation.
+4. L channel can be combined with S channel to exclude edges from low-lit areas.
+
+Final thresholds are avilable throughout the notebook by calling **get_thresholds()** and the combined mask used on all video frames is obtained by calling **get_lane_mask()**. Here is  summary of the mask names and corresponding thresholds:
+
+| Mask Name | Thresholds | Description                                                 |
+|-----------|------------|-------------------------------------------------------------|
+| s_mask    | (170,255)  | S channel mask in the HSV colorspace.                       |
+| l_mask    | (50,250)   | L channel mask in the HSV colorspace.                       |
+| mag_mask  | (80,150)   | Absolute magnitude of Sobel operator in x and y directions. |
+| ang_mask  | (0.85,1.0) | Angle mask dereived as the inverse tan of Sobel y and x     |
+
+The final mask derived was: **mag_s_mask = (mag_mask | s_mask) | (ang_mask & s_mask) & l_mask**.
+
+
+
+
 
 
